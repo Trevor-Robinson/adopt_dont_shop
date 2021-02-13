@@ -11,7 +11,6 @@ RSpec.describe 'Applications show page' do
     app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I like cats", status: "Pending")
 
     visit "applications/#{app.id}"
-    save_and_open_page
 
     expect(page).to have_content(app.name)
     expect(page).to have_content(app.street_address)

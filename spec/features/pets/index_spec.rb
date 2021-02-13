@@ -29,6 +29,17 @@ RSpec.describe 'Pets index page' do
     expect(page).to_not have_content(@shelter3.name)
   end
 
+  it "displays link to start new application" do
+    visit "/pets"
+    expect(page).to have_link("Start A New Application", href: '/applications/new')
+  end
+
+  it "can interact with link to start a new application" do
+    visit "/pets"
+    click_link "Start A New Application"
+    expect(current_path).to eq("/applications/new")
+  end
+
   it "can delete a pet from pet index page" do
     visit "/pets"
 
