@@ -20,5 +20,20 @@ RSpec.describe 'Applications show page' do
     expect(page).to have_content(app.description)
     expect(page).to have_content(app.status)
   end
+  it 'should let user add a pet to application' do
+      app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I like cats", status: "Pending")
+      visit "applications/#{app.id}"
+
+      expect(page).to have_content("Add a Pet to this Application")
+      expect(page).to have_field("query")
+
+      fill_in "query", with: 'Hermes'
+
+      click_on 'Search'
+
+      expect(page).to have_content(@pet1.name)
+
+
+  end
 
 end
