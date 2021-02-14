@@ -5,4 +5,5 @@ class Application < ApplicationRecord
   def status
     "Pending"
   end
+
 end

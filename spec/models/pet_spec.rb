@@ -41,4 +41,12 @@ describe Pet, type: :model do
       expect(pet.male?).to be(false)
     end
   end
+  describe 'instance methods' do
+    it 'can return results by name' do
+      shelter = Shelter.create!(name: 'Pet Rescue', address: '123 Adoption Ln.', city: 'Denver', state: 'CO', zip: '80222')
+      pet1 = shelter.pets.create!(sex: :female, name: "Fluffy", approximate_age: 3, description: 'super cute')
+      pet2 = shelter.pets.create!(image:"", name: "Athena", description: "cat", approximate_age: 3, sex: "female")
+      expect(Pet.search_name('Fluffy').first).to eq(pet1)
+    end
+  end
 end

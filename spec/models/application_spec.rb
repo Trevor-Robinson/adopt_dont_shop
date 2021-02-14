@@ -10,5 +10,7 @@ RSpec.describe Application, type: :model do
 
       expect(app.status).to eq("Pending")
     end
+
+    end
   end
 end

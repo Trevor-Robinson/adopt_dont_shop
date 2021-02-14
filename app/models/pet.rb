@@ -9,4 +9,8 @@ class Pet < ApplicationRecord
             }
 
   enum sex: [:female, :male]
+
+  def self.search_name(name)
+    where(["name = ?", "#{name}"])
+  end
 end
