@@ -17,10 +17,10 @@ RSpec.describe 'Applications show page' do
     expect(page).to have_content(app.city)
     expect(page).to have_content(app.state)
     expect(page).to have_content(app.zip_code)
-    expect(page).to have_content(app.description)
     expect(page).to have_content(app.status)
+    expect(page).to have_content("Pets to Adopt:")
   end
-  it 'should let user add a pet to application' do
+  it 'should let user search for pets' do
       app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I like cats", status: "Pending")
       visit "applications/#{app.id}"
 
@@ -32,8 +32,17 @@ RSpec.describe 'Applications show page' do
       click_on 'Search'
 
       expect(page).to have_content(@pet1.name)
+  end
+  it 'should let users add pets' do
+    app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I like cats", status: "Pending")
+    visit "applications/#{app.id}"
+    fill_in "query", with: 'Hermes'
 
-
+    click_on 'Search'
+    click_on 'Adopt this Pet'
+    within('.to_adopt') do
+      expect(page).to have_content(@pet1.name)
+    end
   end
 
 end

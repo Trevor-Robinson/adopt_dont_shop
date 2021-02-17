@@ -2,15 +2,25 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
-    @pets = Pet.search_name(params[:query])
+    if params[:query]
+      @pets = Pet.search_name(params[:query])
+    else
+      @pets = []
+    end
   end
 
   def new
+    @application = Application.new
   end
 
   def create
-      @application = Application.create(applications_params)
-      redirect_to "/applications/#{@application.id}"
+      @application = Application.new(applications_params)
+      if @application.save
+        redirect_to "/applications/#{@application.id}"
+      else
+        flash.now[:error] = @application.errors.full_messages.to_sentence
+        render :new
+      end
   end
 
   private

@@ -1,8 +1,17 @@
 <h2>Name: <%= "#{@application.name}" %></h2>
 <h4>Address: </h4><%= "#{@application.street_address}" %><br>
 <%= "#{@application.city}, #{@application.state} #{@application.zip_code}"  %><br>
-<h4>Description:</h4> <%= "#{@application.description}" %><br>
 <h4>Status:</h4> <%= "#{@application.status}" %><br>
+<div class="to_adopt">
+<h4>Pets to Adopt:</h4>
+<% @application.pets.each do |pet| %>
+  <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
+  <%= image_tag "#{pet.image}" %><br>
+  approx age: <%= pet.approximate_age %><br>
+  sex: <%= pet.sex%><br>
+  shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
+<% end %>
+</div>
 <h3>Add a Pet to this Application</h3>
 <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |form| %>
   <%= form.label :query, "Search for:" %>
@@ -11,13 +20,10 @@
 <% end %>
 
 <% @pets.each do |pet| %>
-  <% if pet.adoptable == true %>
-  <section id="pet-<%=pet.id%>">
-      <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
-      <%= image_tag "#{pet.image}" %><br>
-      approx age: <%= pet.approximate_age %><br>
-      sex: <%= pet.sex%><br>
-      shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
-    </section>
-  <% end %>
+    <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
+    <%= image_tag "#{pet.image}" %><br>
+    approx age: <%= pet.approximate_age %><br>
+    sex: <%= pet.sex%><br>
+    shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
+    <%= button_to "Adopt this Pet", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", action: :create} %><br>
 <% end %>
