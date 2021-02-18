@@ -12,18 +12,29 @@
   shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
 <% end %>
 </div>
-<h3>Add a Pet to this Application</h3>
-<%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |form| %>
-  <%= form.label :query, "Search for:" %>
-  <%= form.text_field :query %>
-  <%= form.submit "Search" %>
+<% if !@application.pets.empty? && @application.description != nil %>
+  <h4>Why would you make a good owner for these pets?:</h4> <%= "#{@application.description}" %><br>
+<% elsif !@application.pets.empty? %>
+  <%= form_with url: "/applications/#{@application.id}", method: :patch, local:   true do |form| %>
+    <%= form.label :description, "Why would you make a good owner for these pets?" %>
+    <%= form.text_field :description %>
+    <%= form.submit "Submit Application" %>
+  <% end %>
 <% end %>
+<% if @application.description == nil %>
+  <h3>Add a Pet to this Application</h3>
+  <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |form| %>
+    <%= form.label :description, "Search for:" %>
+    <%= form.text_field :query %>
+    <%= form.submit "Search" %>
+  <% end %>
 
-<% @pets.each do |pet| %>
+  <% @pets.each do |pet| %>
     <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
     <%= image_tag "#{pet.image}" %><br>
     approx age: <%= pet.approximate_age %><br>
     sex: <%= pet.sex%><br>
     shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
     <%= button_to "Adopt this Pet", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", action: :create} %><br>
+  <% end %>
 <% end %>

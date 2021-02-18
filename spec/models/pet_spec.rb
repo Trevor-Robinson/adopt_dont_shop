@@ -60,7 +60,7 @@ describe Pet, type: :model do
       shelter = Shelter.create!(name: 'Pet Rescue', address: '123 Adoption Ln.', city: 'Denver', state: 'CO', zip: '80222')
       pet1 = shelter.pets.create!(sex: :female, name: "Fluffy", approximate_age: 3, description: 'super cute')
       pet2 = shelter.pets.create!(image:"", name: "Athena", description: "cat", approximate_age: 3, sex: "female")
-      expect(Pet.search_name('fluf').first).to eq(pet1)
+      expect(Pet.search_name('fluffy').first).to eq(pet1)
     end
   end
 end

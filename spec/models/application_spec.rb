@@ -8,11 +8,11 @@ RSpec.describe Application, type: :model do
     it "can return status" do
       shelter = Shelter.create!(name: 'Pet Rescue', address: '123 Adoption Ln.', city: 'Denver', state: 'CO', zip: '80222')
       pet1 = shelter.pets.create!(sex: :female, name: "Fluffy", approximate_age: 3, description: 'super cute')
-      app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I like cats")
+      app = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345')
 
       expect(app.status).to eq("In Progress")
-      app.pets << pet1
-      expect(app.status).to eq("Pending")
+
+
     end
   end
 end

@@ -8,10 +8,10 @@ class Application < ApplicationRecord
   validates :zip_code, presence: true
 
   def status
-    if !pets.empty?
-      "Pending"
+    if !pets.empty? && description != nil
+      'pending'
     else
-    "In Progress"
-  end
+      "In Progress"
+    end  
   end
 end
