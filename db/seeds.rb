@@ -5,8 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+PetApplication.destroy_all
 Pet.destroy_all
 Shelter.destroy_all
+Application.destroy_all
+
 shelter1 = Shelter.create!(name: "Shady Shelter", address: "123 Shady Ave", city: "Denver", state: "CO", zip: 80011)
 shelter2 = Shelter.create!(name: "Silly Shelter", address: "123 Silly Ave", city: "Longmont", state: "CO", zip: 80012)
 shelter3 = Shelter.create!(name: "Shell Shelter", address: "102 Shelter Dr.", city: "Commerce City", state: "CO", zip: 80022)
@@ -16,8 +19,8 @@ pet3 = shelter1.pets.create!(image:"", name: "Zeus", description: "dog", approxi
 pet4 = shelter3.pets.create!(image:"", name: "Zagrius", description: "dog", approximate_age: 7, sex: "male")
 pet5 = shelter2.pets.create!(image:"", name: "Nyx", description: "cat", approximate_age: 11, sex: "female")
 pet6 = shelter3.pets.create!(image:"", name: "Hades", description: "cat", approximate_age: 9, sex: "male")
-app1 = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I Like Pets")
-app2 = Application.create!(name: "Test", street_address: "321 Test St.", city: "Denver", state: "CO", zip_code: '12345')
+app1 = Application.create!(id: 1, name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I Like Pets")
+app2 = Application.create!(id: 2, name: "Test", street_address: "321 Test St.", city: "Denver", state: "CO", zip_code: '12345')
 app1.pets << pet1
 app1.pets << pet2
 app2.pets << pet2
