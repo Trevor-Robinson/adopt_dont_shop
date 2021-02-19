@@ -1,4 +1,8 @@
 class PetApplication < ApplicationRecord
   belongs_to :application
   belongs_to :pet
+
+  def self.find_record(pet_id, app_id)
+    where(pet_id: pet_id, application_id: app_id).first
+  end
 end

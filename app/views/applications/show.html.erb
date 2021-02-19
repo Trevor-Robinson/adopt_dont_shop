@@ -1,40 +1,28 @@
-<h2>Name: <%= "#{@application.name}" %></h2>
-<h4>Address: </h4><%= "#{@application.street_address}" %><br>
-<%= "#{@application.city}, #{@application.state} #{@application.zip_code}"  %><br>
-<h4>Status:</h4> <%= "#{@application.status}" %><br>
+<%= render partial: 'basic_app' %>
+
 <div class="to_adopt">
 <h4>Pets to Adopt:</h4>
 <% @application.pets.each do |pet| %>
-  <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
-  <%= image_tag "#{pet.image}" %><br>
-  approx age: <%= pet.approximate_age %><br>
-  sex: <%= pet.sex%><br>
-  shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
+  <div class= "pet-<%= pet.id %>">
+  <%= render partial: 'pet_info', locals: {pet: pet} %>
+  </div>
 <% end %>
 </div>
-<% if !@application.pets.empty? && @application.description != nil %>
+<% if @application.complete?%>
   <h4>Why would you make a good owner for these pets?:</h4> <%= "#{@application.description}" %><br>
-<% elsif !@application.pets.empty? %>
-  <%= form_with url: "/applications/#{@application.id}", method: :patch, local:   true do |form| %>
-    <%= form.label :description, "Why would you make a good owner for these pets?" %>
-    <%= form.text_field :description %>
-    <%= form.submit "Submit Application" %>
-  <% end %>
+<% elsif @application.has_pets? %>
+  <h4>Why would you make a good owner for these pets?:</h4>
+  <%= render partial: 'form', locals: {method: :patch, text: :description, button: "Submit Application" } %>
 <% end %>
 <% if @application.description == nil %>
   <h3>Add a Pet to this Application</h3>
-  <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |form| %>
-    <%= form.label :description, "Search for:" %>
-    <%= form.text_field :query %>
-    <%= form.submit "Search" %>
-  <% end %>
+  <h4> Search for:
+  <%= render partial: 'form', locals: {method: :get, text: :query, button: "Search" } %>
 
   <% @pets.each do |pet| %>
-    <h2>name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h2>
-    <%= image_tag "#{pet.image}" %><br>
-    approx age: <%= pet.approximate_age %><br>
-    sex: <%= pet.sex%><br>
-    shelter: <%= link_to "#{pet.shelter.name}", "shelters/#{pet.shelter.id}" %><br>
-    <%= button_to "Adopt this Pet", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", action: :create} %><br>
+    <%= render partial: 'pet_info', locals: {pet: pet} %>
+    <% if !@application.pets.include?(pet) %>
+      <%= button_to "Adopt this Pet", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", action: :create} %><br>
+    <% end %>
   <% end %>
 <% end %>

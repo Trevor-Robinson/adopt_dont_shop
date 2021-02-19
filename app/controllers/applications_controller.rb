@@ -29,6 +29,10 @@ class ApplicationsController < ApplicationController
     redirect_to "/applications/#{application.id}"
   end
 
+  def admin
+    @application = Application.find(params[:id])
+  end
+
   private
   def applications_params
     params.permit(:name, :street_address, :city, :state, :zip_code, :description, :status)

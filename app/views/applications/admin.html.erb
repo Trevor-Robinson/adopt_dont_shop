@@ -1,0 +1,19 @@
+<%= render partial: 'basic_app' %>
+
+<div class="to_adopt">
+<h4>Pets to Adopt:</h4>
+<% @application.pets.each do |pet| %>
+  <div class= "pet-<%= pet.id %>">
+  <%= render partial: 'pet_info', locals: {pet: pet} %>
+  <% if PetApplication.find_record(pet.id, @application.id).status == nil %>
+    <%= button_to "Approve", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", status: true, action: :update, local: true }, method: :patch %><br>
+  <% elsif PetApplication.find_record(pet.id, @application.id).status == true %>
+  <h4> Approved </h4>
+  <% end %>
+  <% if PetApplication.find_record(pet.id, @application.id).status == false %>
+    <h4> Rejected </h4>
+  <% else %>
+    <%= button_to "Reject", { controller: :pet_applications, pet_id: pet.id, application_id: "#{@application.id}", status: false, action: :update, local: true }, method: :patch %>
+  <% end %>
+  </div>
+<% end %>

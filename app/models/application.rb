@@ -8,10 +8,22 @@ class Application < ApplicationRecord
   validates :zip_code, presence: true
 
   def status
-    if !pets.empty? && description != nil
+    if pet_applications.where(status: nil).length == 0  && pet_applications.where(status: true) == pet_applications && !pets.empty? && description != nil
+      'Approved'
+    elsif pet_applications.where(status: nil).length == 0 && pet_applications.where(status: false).length > 0 && !pets.empty? && description != nil
+      'Rejected'
+    elsif !pets.empty? && description != nil
       'pending'
     else
       "In Progress"
-    end  
+    end
+  end
+
+  def complete?
+    !pets.empty? && description != nil
+  end
+
+  def has_pets?
+    !pets.empty?
   end
 end

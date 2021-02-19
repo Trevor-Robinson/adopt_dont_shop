@@ -16,3 +16,9 @@ pet3 = shelter1.pets.create!(image:"", name: "Zeus", description: "dog", approxi
 pet4 = shelter3.pets.create!(image:"", name: "Zagrius", description: "dog", approximate_age: 7, sex: "male")
 pet5 = shelter2.pets.create!(image:"", name: "Nyx", description: "cat", approximate_age: 11, sex: "female")
 pet6 = shelter3.pets.create!(image:"", name: "Hades", description: "cat", approximate_age: 9, sex: "male")
+app1 = Application.create!(name: "Trevor", street_address: "123 Fake St.", city: "Denver", state: "CO", zip_code: '12345', description: "I Like Pets")
+app2 = Application.create!(name: "Test", street_address: "321 Test St.", city: "Denver", state: "CO", zip_code: '12345')
+app1.pets << pet1
+app1.pets << pet2
+app2.pets << pet2
+app2.pets << pet4

@@ -61,7 +61,6 @@ RSpec.describe 'Applications show page' do
 
     fill_in "description", with: "I like pets"
     click_on "Submit Application"
-    save_and_open_page
     expect(current_path).to eq("/applications/#{app.id}")
     expect(page).to_not have_field(:description)
     expect(page).to_not have_button("Submit Application")
